@@ -6,7 +6,7 @@ public abstract class Solution {
 
     }
 
-    public void solve(char ch, int num){
+    public void solveParams(Object... objects) {
 
     }
 

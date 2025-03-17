@@ -12,7 +12,7 @@ public abstract class Answer<E> {
 
     }
 
-    public List<E> getAnswer(){
+    public List<E> getList(){
         return null;
     }
 }

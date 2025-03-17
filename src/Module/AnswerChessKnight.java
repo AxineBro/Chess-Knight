@@ -13,7 +13,7 @@ public class AnswerChessKnight extends Answer {
     }
 
     @Override
-    public List<String> getAnswer(){
+    public List<String> getList(){
         return answerList;
     }
 }

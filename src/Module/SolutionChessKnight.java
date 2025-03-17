@@ -125,7 +125,9 @@ public class SolutionChessKnight extends Solution {
     }
 
     @Override
-    public void solve(char targetLet, int targetNum) {
+    public void solveParams(Object... objects) {
+        char targetLet = (char) objects[0];
+        int targetNum = (int) objects[1];
         target = new Position(targetLet, targetNum);
         solve();
     }

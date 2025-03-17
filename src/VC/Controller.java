@@ -62,9 +62,9 @@ public class Controller {
                     (char)('A' + col), 8 - row));
 
             Solution solution = new SolutionChessKnight((char) ('A' + knightCol), 8 - knightRow);
-            solution.solve((char)('A' + col), (8 - row));
+            solution.solveParams((char)('A' + col), (8 - row));
 
-            List<?> answer = solution.getAnswer().getAnswer();
+            List<?> answer = solution.getAnswer().getList();
             if (answer != null && !answer.isEmpty()) {
                 for (Object position : answer) {
                     view.addMove(String.valueOf(position));
