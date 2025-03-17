@@ -1,12 +1,13 @@
-package ChessKnight;
+package Module;
 
 import basicFiles.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SolutionChessKnight extends Solution {
     private Knight knight;
+    private List<String> solutionPath;
+    private Position target;
 
     class Knight extends ChessFigure{
 
@@ -79,8 +80,62 @@ public class SolutionChessKnight extends Solution {
     }
 
     @Override
-    public void solve(){
+    public void solve() {
+        if (solutionPath != null)
+            solutionPath.clear();
 
+        class Node {
+            Position pos;
+            List<String> path;
+
+            Node(Position pos, List<String> path) {
+                this.pos = pos;
+                this.path = new ArrayList<>(path);
+                this.path.add(pos.toString());
+            }
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        Position start = knight.getPosition();
+        queue.add(new Node(start, new ArrayList<>()));
+        visited.add(start.toString());
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+
+            if (current.pos.equals(target)) {
+                solutionPath = current.path;
+                return;
+            }
+
+            Knight currentKnight = new Knight(current.pos);
+            List<Position> possibleMoves = currentKnight.getListPossibleMoves();
+
+            for (Position next : possibleMoves) {
+                if (!visited.contains(next.toString())) {
+                    visited.add(next.toString());
+                    queue.add(new Node(next, current.path));
+                }
+            }
+        }
+
+        solutionPath = null;
     }
 
+    @Override
+    public void solve(char targetLet, int targetNum) {
+        target = new Position(targetLet, targetNum);
+        solve();
+    }
+
+    @Override
+    public Answer getAnswer(){
+        Answer answer = new AnswerChessKnight(solutionPath);
+        return answer;
+    }
+    public List<String> getSolutionPath() {
+        return solutionPath;
+    }
 }

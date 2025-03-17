@@ -1,4 +1,4 @@
-package ChessKnight;
+package Module;
 
 import basicFiles.Answer;
 
