@@ -39,31 +39,15 @@ public class SolutionChessKnightJava extends Solution {
         public List<Position> getListPossibleMoves(){
             List<Position> possibleMoves = new ArrayList<>();
             Position possibleMove;
-
-            possibleMove = new Position((char) ((int)position.getLetter()-1), position.getNumber()+2);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()+1), position.getNumber()+2);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()-1), position.getNumber()-2);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()+1), position.getNumber()-2);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()-2), position.getNumber()+1);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()-2), position.getNumber()-1);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()+2), position.getNumber()+1);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
-            possibleMove = new Position((char) ((int)position.getLetter()+2), position.getNumber()-1);
-            if(isRealMives(possibleMove))
-                possibleMoves.add(possibleMove);
+            for (int k = 0; k < 2; k++) {
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        possibleMove = new Position((char) ((int)position.getLetter() + (int) (Math.pow(-1, (j + 1))* (k+1))), position.getNumber()+(int) (Math.pow(-1, (i + 1)) * (2 - k)));
+                        if(isRealMives(possibleMove))
+                            possibleMoves.add(possibleMove);
+                    }
+                }
+            }
             return possibleMoves;
         }
 
@@ -114,8 +98,10 @@ public class SolutionChessKnightJava extends Solution {
             List<Position> possibleMoves = currentKnight.getListPossibleMoves();
 
             for (Position next : possibleMoves) {
-                visited.add(next.toString());
-                queue.add(new Node(next, current.path));
+                if(!visited.contains(next.toString())) {
+                    visited.add(next.toString());
+                    queue.add(new Node(next, current.path));
+                }
             }
         }
 

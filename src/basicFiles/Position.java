@@ -25,6 +25,10 @@ public class Position{
         return position.getNumber() == num && position.getLetter() == let;
     }
 
+    public double getDistance(Position position){
+        return Math.sqrt(Math.pow(position.getNumber() + (position.getLetter() - 'A' + 1), 2) + Math.pow(num + let - 'A' + 1, 2));
+    }
+
     @Override
     public String toString(){
         return let + "" + num;
