@@ -2,7 +2,7 @@ package Utils;
 
 import java.util.*;
 
-class AxineLinkedList<E> implements Iterable<E> {
+public class AxineLinkedList<E> implements Iterable<E> {
     private int size = 0;
     private Node<E> first;
     private Node<E> last;
@@ -32,7 +32,7 @@ class AxineLinkedList<E> implements Iterable<E> {
         size++;
     }
 
-    public E dequeue() {
+    public E poll() {
         if (isEmpty()) {
             throw new NoSuchElementException("Queue is empty");
         }
@@ -43,6 +43,17 @@ class AxineLinkedList<E> implements Iterable<E> {
             last = null;
         }
         return item;
+    }
+
+    public boolean add(E e) {
+        if(first == null){
+            last = new Node<>(e);
+            first = last;
+        }else {
+            last = last.next = new Node<>(e);
+        }
+        size++;
+        return false;
     }
 
     public E peek() {

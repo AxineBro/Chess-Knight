@@ -1,24 +1,26 @@
 package VC;
 
-import Module.SolutionChessKnight;
-import basicFiles.Position;
+import Module.AxineQueue.SolutionChessKnightAxine;
+import Module.JavaQueue.SolutionChessKnightJava;
 import basicFiles.Solution;
+import basicFiles.TypeImplementation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller {
     private final View view;
     private boolean isFirstClick = true;
     private int knightRow = -1;
     private int knightCol = -1;
+    private TypeImplementation type;
 
-    public Controller(View view) {
+    public Controller(View view, TypeImplementation type) {
         this.view = view;
+        this.type = type;
         initializeBoard();
     }
 
@@ -61,16 +63,26 @@ public class Controller {
                     (char)('A' + knightCol), 8 - knightRow,
                     (char)('A' + col), 8 - row));
 
-            Solution solution = new SolutionChessKnight((char) ('A' + knightCol), 8 - knightRow);
+            Solution solution = null;
+            switch (type){
+                case JAVA:
+                    solution = new SolutionChessKnightJava((char) ('A' + knightCol), 8 - knightRow);
+                    break;
+                case AXINE:
+                    solution = new SolutionChessKnightAxine((char) ('A' + knightCol), 8 - knightRow);
+                    break;
+            }
             solution.solveParams((char)('A' + col), (8 - row));
 
             List<?> answer = solution.getAnswer().getList();
-            if (answer != null && !answer.isEmpty()) {
-                for (Object position : answer) {
-                    view.addMove(String.valueOf(position));
+            Object prefPosition = null;
+            for (Object position : answer) {
+                if(prefPosition == null) {
+                    prefPosition = position;
+                    continue;
                 }
-            } else {
-                view.addMove("No path found!");
+               view.addMove(String.valueOf(prefPosition) + "-" +String.valueOf(position));
+                prefPosition = position;
             }
         }
         view.revalidate();

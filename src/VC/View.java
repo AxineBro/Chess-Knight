@@ -26,7 +26,7 @@ public class View extends JFrame {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 JPanel square = new JPanel(new BorderLayout());
-                if ((row + col) % 2 == 0) {
+                if ((row + col) % 2 != 0) {
                     square.setBackground(Color.WHITE);
                 } else {
                     square.setBackground(new Color(139, 69, 19));
@@ -53,6 +53,7 @@ public class View extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setMinimumSize(new Dimension(650, 450));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public JPanel[][] getChessBoard() {
@@ -69,13 +70,5 @@ public class View extends JFrame {
 
     public void addMove(String move) {
         moveListModel.addElement(move);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            View view = new View();
-            new Controller(view);
-            view.setVisible(true);
-        });
     }
 }
